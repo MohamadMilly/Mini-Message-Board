@@ -21,3 +21,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, (error) => {
   console.error(error);
 });
+
+module.exports = app;
