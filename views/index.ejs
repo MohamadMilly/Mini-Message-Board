@@ -3,23 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="script.js"></script>
     <link rel="stylesheet" href="/output.css">
     <title>Mini Message Board</title>
   </head>
-  <body class="p-4">
+  <body class="p-4 bg-color-white dark:bg-gray-900">
     <main class="w-full mx-auto md:w-5/6 lg:w-1/2">
-    <h1 class= "font-bold text-3xl my-8"><%= title %></h1>
+
+    <h1 class= "font-bold text-3xl my-8 text-black dark:text-white"><%= title %></h1>
+
     <a class="text-lg bg-green-600 rounded text-white px-4 py-2" href="/new">Add a message</a>
-        <ul class="mx-auto my-8 flex flex-col gap-4 shadow-md rounded p-4 bg-white">
+
+        <ul class="mx-auto my-8 flex flex-col gap-4 shadow-md rounded p-4 bg-white dark:bg-gray-800">
             <% messages.map(message => { %>
-             <li class="px-8 py-4 bg-slate-50 rounded relative border-2 border-slate-400 border-dashed">
-                <h3 class="text-lg font-medium">
+
+             <li class="px-8 py-4 bg-slate-50 rounded relative border-2 border-slate-400 border-dashed dark:bg-gray-700">
+                <h3 class="text-lg font-medium text-black dark:text-white">
                     <%= message.user %>
                 </h3>
-                <p class="text-gray my-4 break-words text-gray-700"><%= message.text %></p>
+
+                <p class="text-gray my-4 break-words text-gray-700 dark:text-gray-300"><%= message.text %></p>
                  
-                <span class="font-light text-gray-500"><%= message.added %></span>
-                <a class=" text-amber-600 underline block mt-4 md:absolute right-4 bottom-4" href="messages/<%= message.id %>" >Show Details</a>
+                <span class="font-light text-gray-500 dark:text-gray-200"><%= message.added %></span>
+
+                <a class=" text-amber-600 dark:text-amber-300 underline block mt-4 md:absolute right-4 bottom-4" href="messages/<%= message.id %>" >Show Details</a>
+
              </li>
           <%  }) %> 
         </ul>
