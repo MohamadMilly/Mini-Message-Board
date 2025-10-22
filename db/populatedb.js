@@ -19,12 +19,7 @@ const INSERT_SQL = `
 async function main() {
   console.log("seeding...");
   const client = new Client({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DB_NAME,
-    port: 5432,
-    ssl: { rejectUnauthorized: false },
+    connectionString: process.env.DATABASE_URl,
   });
 
   await client.connect();
