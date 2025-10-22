@@ -1,11 +1,12 @@
-const db = require("../db");
-
+const db = require("../db/queries");
 async function addNewMessage(req, res) {
   const { message, user } = req.body;
-
-  await db.addNewMessage(user, message);
-
-  res.redirect("/");
+  try {
+    await db.insertMessage(user, message);
+    res.redirect("/");
+  } catch (err) {
+    console.error("Failed to insert message:", err);
+  }
 }
 
 module.exports = { addNewMessage };

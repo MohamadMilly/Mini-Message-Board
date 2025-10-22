@@ -1,5 +1,6 @@
-const db = require("../db");
+const db = require("../db/queries");
 const NotFoundErrorMessage = require("../errors/notFoundMessage");
+
 async function getMessage(req, res) {
   const { messageId } = req.params;
 
@@ -7,7 +8,7 @@ async function getMessage(req, res) {
   if (!message) {
     throw new NotFoundErrorMessage("This Message is no longer available");
   }
-  res.render("message", { ...message });
+  res.render("message", { message: message });
 }
 
-module.exports = getMessage;
+module.exports = { getMessage };
