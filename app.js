@@ -19,6 +19,16 @@ app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).send(err.message || err.name);
 });
 
+app.get("/populate", async (req, res) => {
+  try {
+    await require("./db/populatedb");
+    res.send("✅ Database populated successfully!");
+  } catch (err) {
+    console.error("❌ Population error:", err);
+    res.status(500).send("Population failed.");
+  }
+});
+
 app.listen(PORT, (error) => {
   console.error(error);
 });
