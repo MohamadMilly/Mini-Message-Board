@@ -22,8 +22,9 @@ async function main() {
     host: process.env.HOST,
     user: process.env.USER,
     password: process.env.PASSWORD,
-    database: "messages_board",
+    database: process.env.DB_NAME,
     port: 5432,
+    ssl: { rejectUnauthorized: false },
   });
 
   await client.connect();
