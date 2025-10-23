@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("../db/queries");
 const { addNewMessage } = require("../contollers/addMessage");
 const { getAllMessages } = require("../contollers/getMessages");
+const { getMessagesByQuery } = require("../contollers/searchMessages");
 
 const indexRouter = express.Router();
 
@@ -12,5 +13,7 @@ indexRouter.get("/new", (req, res) => {
 });
 
 indexRouter.post("/new", addNewMessage);
+
+indexRouter.get("/search", getMessagesByQuery);
 
 module.exports = indexRouter;

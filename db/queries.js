@@ -20,8 +20,17 @@ async function getMessage(id) {
   return rows[0];
 }
 
+async function searchMessages(query) {
+  const { rows } = await pool.query(
+    "SELECT * FROM messages WHERE content ILIKE $1 OR user ILIKE $1",
+    [`%${query}%`]
+  );
+  return rows;
+}
+
 module.exports = {
   getAllMessages,
   insertMessage,
   getMessage,
+  searchMessages,
 };

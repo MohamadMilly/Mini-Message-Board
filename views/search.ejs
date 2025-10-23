@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="script.js"></script>
     <link rel="stylesheet" href="/output.css">
-    <title>Mini Message Board</title>
+    <title>Mini Message Board - search</title>
   </head>
   <body class="p-4 bg-color-white dark:bg-gray-900">
     <button class="bg-gray-300 dark:bg-gray-600 group my-4 hover:bg-gray-50 p-2 rounded-full  opacity-70 fixed z-20 left-1/2 -translate-x-1/2" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">
@@ -13,36 +13,14 @@
     </button>
     
     <main class="w-full mx-auto md:w-5/6 lg:w-1/2">
-    <header class="flex justify-between flex-col sm:flex-row items-start sm:items-center">
+    <header>
     <h1 class= "font-bold text-3xl my-8 text-black dark:text-white"><%= title %></h1>
-    <form class="max-w-60 bg-slate-700 p-2 rounded-3xl mb-8 sm:mb-0" method="GET" action="/search">
-      <div class="flex items-center">
-        
-<input type="checkbox" id="toggleSearch" class="peer hidden">
-
-
-<label for="toggleSearch" class="flex items-center space-x-2 px-2 cursor-pointer">
-  <svg class="peer" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#CCCCCC">
-    <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
-  </svg>
-</label>
-
-
-<input
-  class="self-center hidden peer-checked:block  w-full outline-2 outline-blue-400 rounded-2xl px-2 py-1 text-gray-100"
-  type="search"
-  name="query"
-  id="search"
-/>
-
-</div>
-    
-    </form>
+    <a class="text-amber-600 dark:text-amber-300 underline block sm:mb-8" href="/" >View all messages</a>
     </header>
    
-    <a class="text-lg bg-green-600 rounded text-white px-4 py-2" href="/new">Add a message</a>
-
+        
         <ul class="mx-auto my-8 flex flex-col gap-4 shadow-md rounded p-4 bg-white dark:bg-gray-800">
+            <% if(messages.length !== 0) { %>
             <% messages.map(message => { %>
 
              <li class="px-8 py-4 bg-slate-50 rounded relative border-2 border-slate-400 border-dashed dark:bg-gray-700">
@@ -58,6 +36,11 @@
 
              </li>
           <%  }) %> 
+          <% } else { %> 
+               <li class="dark:text-white text-lg text-gray-400">
+                No matching messages
+               </li>
+         <% } %>
         </ul>
 
         </main>
