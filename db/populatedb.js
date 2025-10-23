@@ -2,6 +2,10 @@ const { Client } = require("pg");
 const formatFullDateTime = require("../utility");
 require("dotenv").config();
 
+const dbarg = process.argv[2];
+const DATABASE_URL = dbarg || process.env.DATABASE_URL;
+const SSL = dbarg ? null : { ssl: { rejectUnauthorized: false } };
+
 const CREATE_TABLE_SQL = `
   CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -19,8 +23,8 @@ const INSERT_SQL = `
 async function main() {
   console.log("seeding...");
   const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
+    connectionString: DATABASE_URL,
+    ...SSL,
   });
 
   await client.connect();
