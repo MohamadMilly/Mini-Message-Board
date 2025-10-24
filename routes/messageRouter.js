@@ -1,8 +1,7 @@
 const express = require("express");
-const { getMessage } = require("../contollers/getMessage");
-
+const messagesController = require("../contollers/messagesController");
 const messageRouter = express.Router();
 
-messageRouter.get("/:messageId", getMessage);
+messageRouter.get("/:messageId", messagesController.getMessage);
 
 module.exports = messageRouter;

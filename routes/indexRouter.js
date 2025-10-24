@@ -1,19 +1,15 @@
 const express = require("express");
 const db = require("../db/queries");
-const { addNewMessage } = require("../contollers/addMessage");
-const { getAllMessages } = require("../contollers/getMessages");
-const { getMessagesByQuery } = require("../contollers/searchMessages");
+const indexController = require("../contollers/indexController");
 
 const indexRouter = express.Router();
 
-indexRouter.get("/", getAllMessages);
+indexRouter.get("/", indexController.allMessagesGet);
 
-indexRouter.get("/new", (req, res) => {
-  res.render("form");
-});
+indexRouter.get("/new", indexController.addNewMessageGet);
 
-indexRouter.post("/new", addNewMessage);
+indexRouter.post("/new", indexController.addNewMessagePost);
 
-indexRouter.get("/search", getMessagesByQuery);
+indexRouter.get("/search", indexController.messagesByQueryGet);
 
 module.exports = indexRouter;

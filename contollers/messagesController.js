@@ -1,5 +1,5 @@
-const db = require("../db/queries");
 const NotFoundErrorMessage = require("../errors/notFoundMessage");
+const db = require("../db/queries");
 
 async function getMessage(req, res) {
   const { messageId } = req.params;
