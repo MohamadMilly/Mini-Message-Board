@@ -22,7 +22,7 @@ async function getMessage(id) {
 
 async function searchMessages(query) {
   const { rows } = await pool.query(
-    "SELECT * FROM messages WHERE content ILIKE $1 OR user ILIKE $1",
+    'SELECT * FROM messages WHERE content ILIKE $1 OR "user" ILIKE $1',
     [`%${query}%`]
   );
   return rows;
