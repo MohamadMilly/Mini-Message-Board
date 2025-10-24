@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const { validationResult, matchedData } = require("express-validator");
 
 async function allMessagesGet(req, res) {
   const messages = await db.getAllMessages();
@@ -6,8 +7,12 @@ async function allMessagesGet(req, res) {
 }
 
 async function addNewMessagePost(req, res) {
-  const { message, user } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).render("form", { errors: errors.array() });
+  }
   try {
+    const { message, user } = matchedData(req);
     await db.insertMessage(user, message);
     res.redirect("/");
   } catch (err) {
