@@ -4,45 +4,157 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="script.js"></script>
-    <link rel="stylesheet" href="/output.css">
+    <link rel="stylesheet" href="/output.css" />
     <title>Mini Message Board - search</title>
   </head>
   <body class="p-4 bg-color-white dark:bg-gray-900">
-    <button class="bg-gray-300 dark:bg-gray-600 group my-4 hover:bg-gray-50 p-2 rounded-full  opacity-70 fixed z-20 left-1/2 -translate-x-1/2" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">
-      <svg class="group-hover:fill-slate-900 fill-slate-700 dark:fill-gray-200" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"/></svg>
+    <button
+      class="bg-gray-300 dark:bg-gray-600 group my-4 hover:bg-gray-50 p-2 rounded-full opacity-70 fixed z-20 left-1/2 -translate-x-1/2"
+      onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})"
+    >
+      <svg
+        class="group-hover:fill-slate-900 fill-slate-700 dark:fill-gray-200"
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+      >
+        <path
+          d="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
+        />
+      </svg>
     </button>
-    
+
     <main class="w-full mx-auto md:w-5/6 lg:w-1/2">
-    <header>
-    <h1 class= "font-bold text-3xl my-8 text-black dark:text-white"><%= title %></h1>
-    <a class="text-amber-600 dark:text-amber-300 underline block sm:mb-8" href="/" >View all messages</a>
-    </header>
-   
-        
-        <ul class="mx-auto my-8 flex flex-col gap-4 shadow-md rounded p-4 bg-white dark:bg-gray-800">
-            <% if(messages.length !== 0) { %>
-            <% messages.map(message => { %>
+      <header>
+        <h1 class="font-bold text-3xl my-8 text-black dark:text-white">
+          <%= title %>
+        </h1>
+        <a
+          class="text-amber-600 dark:text-amber-300 underline block sm:mb-8"
+          href="/"
+          >← View all messages</a
+        >
+      </header>
+      <div
+        aria-hidden="true"
+        class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+      >
+        <div
+          style="
+            clip-path: polygon(
+              74.1% 44.1%,
+              100% 61.6%,
+              97.5% 26.9%,
+              85.5% 0.1%,
+              80.7% 2%,
+              72.5% 32.5%,
+              60.2% 62.4%,
+              52.4% 68.1%,
+              47.5% 58.3%,
+              45.2% 34.5%,
+              27.5% 76.7%,
+              0.1% 64.9%,
+              17.9% 100%,
+              27.6% 76.8%,
+              76.1% 97.7%,
+              74.1% 44.1%
+            );
+          "
+          class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
+        ></div>
+      </div>
+      <div
+        aria-hidden="true"
+        class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+      >
+        <div
+          style="
+            clip-path: polygon(
+              74.1% 44.1%,
+              100% 61.6%,
+              97.5% 26.9%,
+              85.5% 0.1%,
+              80.7% 2%,
+              72.5% 32.5%,
+              60.2% 62.4%,
+              52.4% 68.1%,
+              47.5% 58.3%,
+              45.2% 34.5%,
+              27.5% 76.7%,
+              0.1% 64.9%,
+              17.9% 100%,
+              27.6% 76.8%,
+              76.1% 97.7%,
+              74.1% 44.1%
+            );
+          "
+          class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-288.75"
+        ></div>
+      </div>
 
-             <li class="px-8 py-4 bg-slate-50 rounded relative border-2 border-slate-400 border-dashed dark:bg-gray-700">
-                <h3 class="text-lg font-medium text-black dark:text-white">
-                    <%= message.user %>
-                </h3>
-                
-                <p class="text-gray my-4 break-words text-gray-700 dark:text-gray-300 line-clamp-2"><%= message.content %></p>
-                 
-                <span class="font-light text-gray-500 dark:text-gray-200"><%= message.added %></span>
+      <ul
+        class="mx-auto my-8 flex flex-col gap-4 shadow-md rounded p-4 bg-white dark:bg-gray-800 opacity-80"
+      >
+        <% if(messages.length !== 0) { %> <% messages.map(message => { %>
 
-                <a class=" text-amber-600 dark:text-amber-300 underline block mt-4 md:absolute right-4 bottom-4" href="messages/<%= message.id %>" >Show Details</a>
+        <li
+          class="px-8 py-4 bg-slate-50 rounded relative border-2 border-slate-400 border-dashed dark:bg-gray-700"
+        >
+          <h3 class="text-lg font-medium text-black dark:text-white">
+            <%= message.user %>
+          </h3>
 
-             </li>
-          <%  }) %> 
-          <% } else { %> 
-               <li class="dark:text-white text-lg text-gray-400">
-                No matching messages
-               </li>
-         <% } %>
-        </ul>
+          <p
+            class="text-gray my-4 break-words text-gray-700 dark:text-gray-300 line-clamp-2"
+          >
+            <%= message.content %>
+          </p>
 
-        </main>
+          <span class="font-light text-gray-500 dark:text-gray-200"
+            ><%= message.added %></span
+          >
+
+          <a
+            class="text-amber-600 dark:text-amber-300 underline block mt-4 md:absolute right-4 bottom-4"
+            href="messages/<%= message.id %>"
+            >Show Details</a
+          >
+        </li>
+        <% }) %> <% } else { %>
+        <li class="dark:text-white text-lg text-gray-400">
+          No matching messages
+        </li>
+        <% } %>
+      </ul>
+    </main>
+    <div
+      aria-hidden="true"
+      class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+    >
+      <div
+        style="
+          clip-path: polygon(
+            74.1% 44.1%,
+            100% 61.6%,
+            97.5% 26.9%,
+            85.5% 0.1%,
+            80.7% 2%,
+            72.5% 32.5%,
+            60.2% 62.4%,
+            52.4% 68.1%,
+            47.5% 58.3%,
+            45.2% 34.5%,
+            27.5% 76.7%,
+            0.1% 64.9%,
+            17.9% 100%,
+            27.6% 76.8%,
+            76.1% 97.7%,
+            74.1% 44.1%
+          );
+        "
+        class="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-288.75"
+      ></div>
+    </div>
   </body>
 </html>
