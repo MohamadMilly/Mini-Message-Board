@@ -24,7 +24,7 @@ async function main() {
   console.log("seeding...");
   const client = new Client({
     connectionString: DATABASE_URL,
-    ...SSL,
+    ssl: { rejectUnauthorized: false },
   });
 
   await client.connect();
