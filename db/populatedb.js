@@ -11,7 +11,8 @@ const CREATE_TABLE_SQL = `
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     "user" VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    added TEXT
+    added TEXT,
+    replytoid Int
   );
 `;
 
