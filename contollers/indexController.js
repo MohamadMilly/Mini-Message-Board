@@ -6,22 +6,34 @@ async function allMessagesGet(req, res) {
   res.render("index", { messages: messages, title: "Mini Message Board" });
 }
 
-async function addNewMessagePost(req, res) {
+async function addNewMessagePost(req, res, next) {
+  const repliedMessageId = req.query.replyId;
+  console.log(repliedMessageId);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).render("form", { errors: errors.array() });
   }
   try {
     const { message, user } = matchedData(req);
-    await db.insertMessage(user, message);
+    await db.insertMessage(user, message, repliedMessageId);
     res.redirect("/");
   } catch (err) {
     console.error("Failed to insert message:", err);
+    return next(err);
   }
 }
 
 function addNewMessageGet(req, res) {
   res.render("form");
+}
+
+async function replyToMessageGet(req, res, next) {
+  try {
+    const repliedMessage = await db.getMessage(req.params.messageId);
+    res.render("reply", { message: repliedMessage });
+  } catch (error) {
+    return next(error);
+  }
 }
 
 async function messagesByQueryGet(req, res) {
@@ -35,4 +47,5 @@ module.exports = {
   allMessagesGet,
   messagesByQueryGet,
   addNewMessageGet,
+  replyToMessageGet,
 };

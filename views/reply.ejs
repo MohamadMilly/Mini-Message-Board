@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/output.css" />
-    <title>Message</title>
+    <title>Mini Message Board - New Message</title>
   </head>
-  <body class="p-4 bg-white dark:bg-gray-900">
+  <body class="h-screen p-4 bg-white dark:bg-gray-900">
     <div
       aria-hidden="true"
       class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -37,29 +37,57 @@
     </div>
     <main class="w-full mx-auto md:w-5/6 lg:w-1/2">
       <h1 class="font-bold text-3xl my-8 text-black dark:text-white">
-        Message Details
+        Reply To Message
       </h1>
-      <section
-        class="px-6 py-4 bg-[rgba(248,250,252,0.5)] rounded dark:bg-[rgba(31,41,55,0.5)] backdrop-blur-lg"
+      <div
+        class="px-4 py-2 border-l-5 dark:border-amber-400 dark:bg-gray-500/50 border-amber-300 bg-gray-200"
       >
-        <h2 class="text-lg text-black dark:text-gray-200">
-          From : <%= message.user %>
+        <h2 class="text-lg font-medium text-gray-700 dark:text-gray-200 mb-2">
+          Reply to : <%= message.user %>
         </h2>
-        <div class="my-4 break-words text-gray-700 dark:text-gray-100">
-          <b class="block mb-1">Message:</b>
-          <p dir="auto"><%= message.content %></p>
-        </div>
-        <span class="font-light text-gray-500 dark:text-gray-50">
-          Sent on : <%= message.added %></span
+        <p class="text-gray-600 dark:text-gray-300" dir="auto">
+          <%= message.content %>
+        </p>
+      </div>
+      <form
+        class="flex items-center flex-col gap-4 py-6 px-4 bg-[rgba(248,250,252,0.7)] dark:bg-[rgba(31,41,55,0.7)] rounded backdrop-blur-lg"
+        method="POST"
+        action="/new/?replyId=<%= message.id %>"
+      >
+        <label
+          class="gap-2 flex flex-col md:w-1/2 w-full text-black dark:text-gray-200"
+          for="user"
         >
-      </section>
-
-      <a
-        class="block mt-2 underline text-amber-600 dark:text-amber-300"
-        href="/"
-      >
-        ← Back to Messages</a
-      >
+          Name:
+          <input
+            class="border-2 border-gray-500 dark:border-gray-100 rounded-md p-1"
+            type="text"
+            name="user"
+            id="user"
+            required
+          />
+        </label>
+        <label
+          class="gap-2 flex flex-col md:w-1/2 w-full text-black dark:text-gray-200"
+          for="message"
+        >
+          Your Message:
+          <textarea
+            dir="auto"
+            class="border-2 border-gray-500 dark:border-gray-100 rounded-md p-1 h-40 whitespace-pre break-normal text-left"
+            name="message"
+            id="message"
+            required
+          ></textarea>
+        </label>
+        <button
+          class="bg-green-600 px-8 py-2 text-white my-4 rounded"
+          type="submit"
+        >
+          Send
+        </button>
+        <%- include("partials/error") %>
+      </form>
     </main>
     <div
       aria-hidden="true"

@@ -23,6 +23,8 @@ indexRouter.get("/", indexController.allMessagesGet);
 
 indexRouter.get("/new", indexController.addNewMessageGet);
 
+indexRouter.get("/reply/:messageId", indexController.replyToMessageGet);
+
 indexRouter.post("/new", validateMessage, indexController.addNewMessagePost);
 
 indexRouter.get("/search", indexController.messagesByQueryGet);
