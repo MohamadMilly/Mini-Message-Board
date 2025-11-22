@@ -20,16 +20,21 @@ const INSERT_SQL = `
   INSERT INTO messages ("user",content,added)
   VALUES ($1, $2, $3);
 `;
+const USERS_TABLE_SQL = `CREATE TABLE IF NOT EXISTS users (
+id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+"username" VARCHAR(255) NOT NULL
+);`;
 
 async function main() {
   console.log("seeding...");
   const client = new Client({
     connectionString: DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
+    ...SSL,
   });
 
   await client.connect();
   await client.query(CREATE_TABLE_SQL);
+  await client.query(USERS_TABLE_SQL);
   await client.query(INSERT_SQL, [
     "Mohammed Milly",
     "Hello! ,  Try out the new version with non-auto deleted messages",

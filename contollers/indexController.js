@@ -1,30 +1,33 @@
+const passport = require("passport");
 const db = require("../db/queries");
 const { validationResult, matchedData } = require("express-validator");
 
 async function allMessagesGet(req, res) {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/auth");
+  }
   const messages = await db.getAllMessages();
-  res.render("index", { messages: messages, title: "Mini Message Board" });
+  res.render("index", {
+    messages: messages,
+    title: "Mini Message Board",
+    user: req.user,
+  });
 }
 
 async function addNewMessagePost(req, res, next) {
   const repliedMessageId = req.query.replyId;
-  console.log(repliedMessageId);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).render("form", { errors: errors.array() });
   }
   try {
-    const { message, user } = matchedData(req);
-    await db.insertMessage(user, message, repliedMessageId);
+    const { message } = matchedData(req);
+    await db.insertMessage(req.user.username, message, repliedMessageId);
     res.redirect("/");
   } catch (err) {
     console.error("Failed to insert message:", err);
     return next(err);
   }
-}
-
-function addNewMessageGet(req, res) {
-  res.render("form");
 }
 
 async function replyToMessageGet(req, res, next) {
@@ -42,10 +45,14 @@ async function messagesByQueryGet(req, res) {
   res.render("search", { messages: messages, title: "Results" });
 }
 
+function authenticationGet(req, res) {
+  res.render("authentication");
+}
+
 module.exports = {
   addNewMessagePost,
   allMessagesGet,
   messagesByQueryGet,
-  addNewMessageGet,
   replyToMessageGet,
+  authenticationGet,
 };
