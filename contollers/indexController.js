@@ -3,22 +3,28 @@ const db = require("../db/queries");
 const { validationResult, matchedData } = require("express-validator");
 
 async function allMessagesGet(req, res) {
+  const currentRepliedMessageId = req.query.reply;
+  const repliedMessageData = await db.getMessage(currentRepliedMessageId);
   if (!req.isAuthenticated()) {
     return res.redirect("/auth");
   }
   const messages = await db.getAllMessages();
+  const errors = req.flash("errors");
   res.render("index", {
     messages: messages,
     title: "Mini Message Board",
     user: req.user,
+    errors: errors,
+    currentRepliedMessage: repliedMessageData,
   });
 }
 
 async function addNewMessagePost(req, res, next) {
-  const repliedMessageId = req.query.replyId;
+  const repliedMessageId = req.query.reply ? req.query.reply : null;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).render("form", { errors: errors.array() });
+    req.flash("errors", errors.array());
+    return res.redirect("/");
   }
   try {
     const { message } = matchedData(req);

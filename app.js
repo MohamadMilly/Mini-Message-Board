@@ -1,14 +1,21 @@
 const express = require("express");
 const path = require("path");
+// routes
 const indexRouter = require("./routes/indexRouter");
 const messageRouter = require("./routes/messageRouter");
+// passport and LocalStrategy
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+// session
 const session = require("express-session");
+const pgSession = require("connect-pg-simple")(session);
+// db
 const pool = require("./db/pool");
 const db = require("./db/queries");
-const pgSession = require("connect-pg-simple")(session);
+//flash
+const flash = require("connect-flash");
 require("dotenv").config();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -36,7 +43,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash());
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
@@ -79,6 +86,7 @@ passport.deserializeUser(async (id, done) => {
 
 app.use("/", indexRouter);
 app.use("/messages", messageRouter);
+
 app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).send(err.message || err.name);
   console.error(err);

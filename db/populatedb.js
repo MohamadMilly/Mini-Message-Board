@@ -20,6 +20,7 @@ const INSERT_SQL = `
   INSERT INTO messages ("user",content,added)
   VALUES ($1, $2, $3);
 `;
+
 const USERS_TABLE_SQL = `CREATE TABLE IF NOT EXISTS users (
 id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 "username" VARCHAR(255) NOT NULL

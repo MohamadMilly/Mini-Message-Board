@@ -1,1 +1,26 @@
 @import "tailwindcss";
+@theme {
+  --animate-alert: fadein 0.5s ease-in 1 backwards,
+    fadeout 3s ease-in-out 1 forwards;
+
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeout {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}
