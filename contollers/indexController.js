@@ -20,7 +20,7 @@ async function allMessagesGet(req, res) {
 }
 
 async function addNewMessagePost(req, res, next) {
-  const repliedMessageId = req.query.reply ? req.query.reply : null;
+  const currentRepliedMessageId = req.query.reply ? req.query.reply : null;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     req.flash("errors", errors.array());
@@ -28,7 +28,7 @@ async function addNewMessagePost(req, res, next) {
   }
   try {
     const { message } = matchedData(req);
-    await db.insertMessage(req.user.username, message, repliedMessageId);
+    await db.insertMessage(req.user.username, message, currentRepliedMessageId);
     res.redirect("/");
   } catch (err) {
     console.error("Failed to insert message:", err);
