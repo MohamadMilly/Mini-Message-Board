@@ -7,4 +7,5 @@ const SSL = dbarg ? null : { ssl: { rejectUnauthorized: false } };
 
 module.exports = new Pool({
   connectionString: DATABASE_URL,
+  ...SSL,
 });

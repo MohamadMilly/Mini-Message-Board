@@ -40,12 +40,12 @@
     <main class="w-full mx-auto md:w-5/6 lg:w-1/2">
       <h1 class="font-bold text-3xl my-8 text-black dark:text-white">Login</h1>
 
-    
       <form
         class="flex items-center flex-col gap-4 py-6 px-4 bg-[rgba(248,250,252,0.7)] dark:bg-[rgba(31,41,55,0.7)] rounded backdrop-blur-lg"
         method="POST"
         action="/auth"
       >
+        <!-- Username -->
         <label
           class="gap-2 flex flex-col md:w-1/2 w-full text-black dark:text-gray-200"
           for="user"
@@ -60,8 +60,20 @@
           />
         </label>
 
-        <!-- Added hidden password so server-side auth that expects password won't return 400 -->
-        <input type="hidden" name="password" value=" " />
+        <!-- Password -->
+        <label
+          class="gap-2 flex flex-col md:w-1/2 w-full text-black dark:text-gray-200"
+          for="pass"
+        >
+          Password:
+          <input
+            class="border-2 border-gray-500 dark:border-gray-100 rounded-md p-2"
+            type="password"
+            name="password"
+            id="pass"
+            required
+          />
+        </label>
 
         <button
           class="bg-green-600 px-8 py-2 text-white my-4 rounded hover:bg-green-700 dark:hover:bg-green-500"
@@ -69,7 +81,7 @@
         >
           Login
         </button>
-
+      </form>
     </main>
 
     <!-- Bottom decorative background -->

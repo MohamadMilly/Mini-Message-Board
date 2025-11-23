@@ -49,17 +49,16 @@ passport.use(
     try {
       const user = await db.getUser(username);
 
-      if (user) {
-        return done(null, user);
+      if (!user) {
+        return done(null, false, {
+          message: "You are not allowed to see the content.",
+        });
+      }
+      if (password !== process.env.PASSWORD) {
+        return done(null, false, { message: "Password is incorrect." });
       }
 
-      const result = await pool.query(
-        "INSERT INTO users(username) VALUES($1) RETURNING *",
-        [username]
-      );
-
-      const newUser = result.rows[0];
-      return done(null, newUser);
+      return done(null, user);
     } catch (err) {
       console.log(err);
       return done(err);

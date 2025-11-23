@@ -22,6 +22,7 @@ indexRouter.post(
   "/auth",
   passport.authenticate("local", {
     successRedirect: "/",
+    failureRedirect: "/auth",
   })
 );
 
