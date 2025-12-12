@@ -14,6 +14,7 @@ async function getAllMessages() {
     LEFT JOIN messages AS m2 
     ON m1.replytoid = m2.id
     ORDER BY m1.added
+    OFFSET 200
     ;`
   );
   return rows;
