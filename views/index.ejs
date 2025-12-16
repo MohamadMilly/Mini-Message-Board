@@ -153,78 +153,71 @@
 
     <main class="w-full mx-auto md:w-5/6 lg:w-1/2 my-6">
       <ul
-        class="mx-auto mt-8 mb-20 md:mb-32 flex flex-col gap-4 shadow-md rounded p-4 bg-white dark:bg-gray-800 opacity-80"
+        class="mx-auto mt-8 mb-20 md:mb-32 flex flex-col gap-4 shadow-md rounded p-4 bg-white/80 dark:bg-gray-800/80"
       >
-        <% messages.map(message => { %>
-
-        <li
-          class="px-8 py-4 bg-slate-50 rounded relative border-2 border-slate-400 border-dashed dark:bg-gray-700"
-        >
-          <% if(message.repliedmessageuser && message.repliedmessagecontent) {
-          %>
-          <a class="block" href="/messages/<%= message.repliedmessageid %>">
-            <div
-              class="px-4 py-2 mb-2 border-l-5 rounded dark:border-amber-400 dark:bg-gray-500/50 border-amber-300 bg-gray-200/50"
-            >
-              <h2 class="font-medium text-gray-700 dark:text-gray-200 mb-2">
-                Reply to : <%= message.repliedmessageuser %>
-              </h2>
-              <p
-                class="text-sm text-gray-600 dark:text-gray-300 line-clamp-1"
-                dir="auto"
+        <% messages.map(message => { %> <% const isCurrentUserMessage =
+        message.user === locals.user.username %>
+        <a href="/messages/<%= message.id %>">
+          <li
+            class="px-3 py-2 rounded-2xl relative w-5/6 sm:w-1/2 <%= isCurrentUserMessage ? 'ml-auto rounded-br-sm dark:bg-purple-600 bg-purple-600/85' : 'rounded-bl-sm bg-slate-50 dark:bg-gray-700' %>"
+          >
+            <% if(!isCurrentUserMessage) { %>
+            <h3 class="font-medium mb-0.5 text-gray-900 dark:text-white">
+              <%= message.user %>
+            </h3>
+            <% } %> <% if(message.repliedmessageuser &&
+            message.repliedmessagecontent) { %>
+            <a class="block" href="/messages/<%= message.repliedmessageid %>">
+              <div
+                class="px-2 py-0.5 mb-2 border-l-3 rounded dark:border-amber-400 dark:bg-gray-500/30 border-amber-300 bg-gray-200/20"
               >
-                <%= message.repliedmessagecontent %>
-              </p>
-            </div>
-          </a>
+                <h2
+                  class="text-sm font-medium <%= isCurrentUserMessage ? 'text-white' : 'text-gray-700 dark:text-gray-200'%> mb-0.5"
+                >
+                  Reply to : <%= message.repliedmessageuser %>
+                </h2>
+                <p
+                  class="text-sm <%= isCurrentUserMessage ? 'text-white' : 'text-gray-600 dark:text-gray-300'%> line-clamp-1"
+                  dir="auto"
+                >
+                  <%= message.repliedmessagecontent %>
+                </p>
+              </div>
+            </a>
 
-          <% } %> <% if(locals.user && locals.user.username === message.user ) {
-          %>
-          <h3 class="text-lg font-medium text-black dark:text-white">
-            <%= locals.user.username %>
-          </h3>
-          <% } else { %>
+            <% } %>
 
-          <h3 class="text-lg font-medium text-black dark:text-white">
-            <%= message.user %>
-          </h3>
-          <% } %>
-          <p
-            dir="auto"
-            class="text-gray mt-2 mb-4 break-words text-gray-700 dark:text-gray-300 line-clamp-2"
-          >
-            <%= message.content %>
-          </p>
-
-          <span class="font-light text-gray-500 dark:text-gray-200"
-            ><%= message.added %></span
-          >
-          <div class="flex justify-between">
-            <a
-              class="text-amber-600 dark:text-amber-300 underline block mt-4 right-4 bottom-4"
-              href="/messages/<%= message.id %>"
-              >Show Details</a
+            <p
+              dir="auto"
+              class="text-gray mb-2 break-words <%= isCurrentUserMessage ? 'text-white' : 'text-gray-700 dark:text-gray-300' %> line-clamp-6"
             >
+              <%= message.content %>
+            </p>
+
+            <span
+              class="font-light text-sm absolute bottom-0 translate-y-[100%] <%= isCurrentUserMessage ? 'right-2' : 'left-2' %> text-gray-700 dark:text-gray-200"
+              ><%= message.added %></span
+            >
+
             <a
-              class="flex items-center space-x-2 p-2 rounded bg-gray-200/50 dark:bg-gray-500/50"
+              class="flex items-center p-2 rounded bg-gray-200/20 dark:bg-gray-500/20 w-fit <%= isCurrentUserMessage ? 'ml-auto' : '' %>"
               href="/?reply=<%= message.id %>"
             >
               <span class="sr-only">Reply</span>
               <svg
-                class="dark:fill-gray-200 fill-gray-700"
+                class="<%= isCurrentUserMessage ? 'fill-gray-200' : 'dark:fill-gray-200 fill-gray-600' %>"
                 xmlns="http://www.w3.org/2000/svg"
-                height="24px"
+                height="16px"
                 viewBox="0 -960 960 960"
-                width="24px"
-                fill="#000000"
+                width="16px"
               >
                 <path
                   d="M760-200v-160q0-50-35-85t-85-35H273l144 144-57 56-240-240 240-240 57 56-144 144h367q83 0 141.5 58.5T840-360v160h-80Z"
                 />
               </svg>
             </a>
-          </div>
-        </li>
+          </li>
+        </a>
         <% }) %>
       </ul>
     </main>
@@ -301,10 +294,11 @@
             dir="auto"
             id="chat"
             rows="1"
-            class="mx-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 placeholder:text-gray-500 dark:placeholder:text-gray-400 whitespace-pre break-normal"
+            class="mx-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 placeholder:text-gray-500 dark:placeholder:text-gray-400 whitespace-pre break-normal overflow-hidden resize-none max-h-40"
             placeholder="Your message..."
             required
             name="message"
+            oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
           ></textarea>
 
           <!-- Send button -->
